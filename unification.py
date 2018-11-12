@@ -63,6 +63,7 @@ def functionToString(f):
             return s
 
 # utilisée pour afficher les permutations de l'unification de façon lisible
+# cette methode permet aussi de transformer la l'unification de ["?x","[...]"] à ["?x",[...]] si [...] represente une fonction
 def beautifulResult(a):
     if(a is None):
         return "non unifiable"
@@ -79,7 +80,10 @@ def beautifulResult(a):
 
 
 
-# e1=Expression("q(f(A,?x),?x)")
-# e2=Expression("q(f(A,?x),?x)")
-# print(beautifulResult(unifier(e1,e2)))
-# # print(unifier(e1,e2))
+# e1=Expression("p(B,C,?x,?z,f(A,?z,B))")
+# # print(e1.expression)
+# e2=Expression("p(?y,?z,?y,C,?w)")
+# res=unifier(e1,e2)
+# print(res)
+# # print(beautifulResult(unifier(e1,e2)))
+# # # print(unifier(e1,e2))

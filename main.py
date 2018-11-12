@@ -4,11 +4,11 @@ import unification as unif
 def CLI_app():
     a=input("type the first expression to unify: ")
     b=input("type the second expression to unify: ")
-    e1=Expression(a)
-    e2=Expression(b)
+    print(a,b)
     x=unif.unifier(e1,e2)
     result=unif.beautifulResult(x)
     print(result)
+
 
 def FILE_app():
     myFile=open("testExpression.txt","r")

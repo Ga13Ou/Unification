@@ -57,3 +57,6 @@ class Expression:
             tmp=tmp.replace(v, s)
         tmp=tmp.replace('\'[','[').replace(']\'',']')
         self.expression = ast.literal_eval(tmp)
+
+    def __repr__(self):
+        return str(self.expression)
