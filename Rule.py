@@ -1,13 +1,16 @@
 from expression import Expression
 import unification as Unif
+import copy
 
 class Rule:
     #une regle doit etre de la forme
     #pere(?X,?Y):-parent(?X,?Y); homme(?X)
-    premisses=[]
-    extraCheck=[]
+    
+    
     def __init__(self, string):
         assert isinstance(string,str)
+        self.extraCheck=[]
+        self.premisses=[]
         resultat=string.split(":-")
         conclusionString=resultat[0].strip()
         premisseString=resultat[1].split(";")
@@ -23,8 +26,13 @@ class Rule:
         
 
     def pop_premisse(self):
-        self.premisses.pop(0)
-        return self
+        # self.premisses.pop(0)
+        a=copy.deepcopy(self)
+        a.premisses.pop(0)
+        return a
+       
+    def push_premisse(self,p):
+        self.premisses.insert(0,p)
 
     def spreadUtil(self,array,unification):
         assert isinstance(unification,list)
@@ -51,27 +59,29 @@ class Rule:
     
     # propagation
     def spread(self,unification):
+        a=copy.deepcopy(self)
         Unif.beautifulResult(unification)
-        conclusionExpression=self.conclusion.expression
-        self.spreadUtil(conclusionExpression,unification)
+        conclusionExpression=a.conclusion.expression
+        a.spreadUtil(conclusionExpression,unification)
         # to spread the unification to the extrachecks
-        self.spreadUtil_forExtra(self.extraCheck,unification)
+        a.spreadUtil_forExtra(a.extraCheck,unification)
 
         # array of premisses
         premisseArray=[]
 
-        for p in self.premisses:
+        for p in a.premisses:
             premisseArray.append(p.expression)
 
-        self.spreadUtil(premisseArray,unification)
+        a.spreadUtil(premisseArray,unification)
 
         # array of expressions
         premisseArrayExpression=[]
         for p in premisseArray:
             premisseArrayExpression.append(Expression(p))
 
-        self.conclusion=Expression(conclusionExpression)
-        self.premisses=premisseArrayExpression
+        a.conclusion=Expression(conclusionExpression)
+        a.premisses=premisseArrayExpression
+        return a
 
     def has_premisses(self):
         if(len(self.premisses)==0):
@@ -90,22 +100,24 @@ class Rule:
     def checkExtra(self):
         for word in self.extraCheck:
             a=word.split("\==")
-            if(a[0]!=a[1]):
+            if(a[0]==a[1]):
                 return False
         return True
+    def __repr__(self):
+        return str({"premisse":self.premisses,"conclusion":self.conclusion,"check":self.extraCheck})+"\n"
 
 
 
 
 #Test
     
-a=Rule('frere_ou_soeur(?X,?Y) :- pere(P,?X);pere(P,?Y);mere(M,?X);?Z\==rt;mere(M,?Y);?X\==?Y')
-unif=[['?X', ['#f', 'A', 'C', 'B']], ['?Z', '?B'], ['?B', 'rt'], ['?Y', ['#f', 'A', 'C', 'B']]]
-a.spread(unif)
+# a=Rule('frere_ou_soeur(?X,?Y) :- pere(P,?X);pere(P,?Y);mere(M,?X);?Z\==rt;mere(M,?Y);?X\==?Y')
+# unif=[['?X', ['#f', 'A', 'C', 'B']], ['?Z', '?B'], ['?B', 'rt'], ['?Y', ['#f', 'A', 'C', 'B']]]
+# a.spread(unif)
 # a.pop_premisse()
-print(a.conclusion)
+# print(a.conclusion)
 # print(a.conclusion_to_string())
 # print(a.get_first_premiss())
-print(a.checkExtra())
-print("allo",a.extraCheck)
+# print(a.checkExtra())
+# print("allo",a.extraCheck)
         
