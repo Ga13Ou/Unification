@@ -11,7 +11,8 @@ import copy
 def CLI_app():
     a=input("ecrire la 1ere expression a unifier: ")
     b=input("ecrire la 2eme expression a unifier: ")
-    print(a,b)
+    e1=Expression(a)
+    e2=Expression(b)
     x=unif.unifier(e1,e2)
     result=unif.beautifulResult(x)
     print(result)
