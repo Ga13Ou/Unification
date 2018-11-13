@@ -1,7 +1,8 @@
-# Travaille TP AI
+# Travaille TP1 AI
 # Gastli Oussama
 # Hanana Nour
 # GL4
+
 from expression import Expression
 import ast
 
@@ -75,15 +76,3 @@ def beautifulResult(a):
             i[1]=ast.literal_eval(i[1])
         s+="("+i[0]+"/"+functionToString(i[1])+") "
     return s
-
-
-
-
-
-# e1=Expression("p(B,C,?x,?z,f(A,?z,B))")
-# # print(e1.expression)
-# e2=Expression("p(?y,?z,?y,C,?w)")
-# res=unifier(e1,e2)
-# print(res)
-# # print(beautifulResult(unifier(e1,e2)))
-# # # print(unifier(e1,e2))

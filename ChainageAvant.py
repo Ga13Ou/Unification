@@ -1,3 +1,8 @@
+# Travaille TP1 AI
+# Gastli Oussama
+# Hanana Nour
+# GL4
+
 from expression import Expression
 import unification as Unif
 from Rule import Rule
@@ -40,17 +45,16 @@ class ChainageAvant:
     def chainageUtil(self,rule:Rule):
         if(rule.has_premisses()):
             p1=rule.get_first_premiss()
-            print(p1)
+            # print(p1)
             for fait in self.BfExp:
                 x=Unif.unifier(fait,p1)
-                print("\t",fait,"   ",x)
+                # print("\t",fait,"   ",x)
                 if(x is not None):
                     Unif.beautifulResult(x)
                     ruleS=rule.spread(x)
                     p=ruleS.get_first_premiss()
                     ruleSP=ruleS.pop_premisse()
                     self.chainageUtil(ruleSP)
-                    # rule.push_premisse(p)
         elif(not rule.has_premisses()):
             if(rule.checkExtra()):
                 c=rule.conclusion_to_string()
@@ -61,6 +65,7 @@ class ChainageAvant:
                     self.Ok=True
 
     def chainage_avant(self):
+        self.newFaits=[]
         self.Ok=True
         i=0
         while(self.Ok):
@@ -68,20 +73,9 @@ class ChainageAvant:
             self.Ok=False
             for r in self.BrExp:
                 self.chainageUtil(r)
-        print(i)
 
 
 
 
 
 sys.setrecursionlimit(1000)
-# # # test
-# a=ChainageAvant()
-# # print(a.BF)
-# print(a.BR)
-# # print(a.BfExp)
-# print()
-# print(a.BrExp)
-# print(a.newFaits)
-# a.chainage_avant()
-# print(a.newFaits)

@@ -1,3 +1,8 @@
+# Travaille TP1 AI
+# Gastli Oussama
+# Hanana Nour
+# GL4
+
 from expression import Expression
 import unification as Unif
 import copy
@@ -31,9 +36,6 @@ class Rule:
         a.premisses.pop(0)
         return a
        
-    def push_premisse(self,p):
-        self.premisses.insert(0,p)
-
     def spreadUtil(self,array,unification):
         assert isinstance(unification,list)
         for i in range(len(array)):
@@ -109,15 +111,5 @@ class Rule:
 
 
 
-#Test
-    
-# a=Rule('frere_ou_soeur(?X,?Y) :- pere(P,?X);pere(P,?Y);mere(M,?X);?Z\==rt;mere(M,?Y);?X\==?Y')
-# unif=[['?X', ['#f', 'A', 'C', 'B']], ['?Z', '?B'], ['?B', 'rt'], ['?Y', ['#f', 'A', 'C', 'B']]]
-# a.spread(unif)
-# a.pop_premisse()
-# print(a.conclusion)
-# print(a.conclusion_to_string())
-# print(a.get_first_premiss())
-# print(a.checkExtra())
-# print("allo",a.extraCheck)
+
         
